@@ -12,7 +12,7 @@ module.exports = function setupApi (controllers) {
   let pizzaRouter = express.Router();
   require('./pizza.routes')(pizzaRouter, controllers);
   api.use('/pizza', pizzaRouter);
-  console.log('🚀  ' + chalk.yellow('RUTAS: ') + chalk.redBright('PIZZA'));
+  console.log('🚀  ' + chalk.yellow('ROUTES: ') + chalk.redBright('PIZZA'));
 
   /**
    * Toppings module
@@ -20,7 +20,7 @@ module.exports = function setupApi (controllers) {
   let toppingRouter = express.Router();
   require('./topping.routes')(toppingRouter, controllers);
   api.use('/topping', toppingRouter);
-  console.log('🚀  ' + chalk.yellow('RUTAS: ') + chalk.redBright('TOPPING'));
+  console.log('🚀  ' + chalk.yellow('ROUTES: ') + chalk.redBright('TOPPING'));
 
   return api;
 };
