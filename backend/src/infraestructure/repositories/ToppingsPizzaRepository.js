@@ -7,7 +7,7 @@ module.exports = function toppingsPizzaRepository (models, Sequelize) {
 
   function findAll (params = {}) {
     let query = {};
-    query.where = {};
+    query.where = params;
     query.include = [
       {
         attributes: ['name'],
@@ -33,11 +33,18 @@ module.exports = function toppingsPizzaRepository (models, Sequelize) {
   }
 
   function findByPizzaId (idPizza) {
-    return toppingsPizza.findOne({
+    let query = {
       where: {
         id_pizza: idPizza
-      }
-    });
+      },
+      include: [{
+        attributes: ['name'],
+        model: toppings,
+        as: 'topping'
+      }]
+    };
+
+    return toppingsPizza.findAndCountAll(query);
   }
 
   function findByToppingId (idTopping) {
@@ -55,22 +62,22 @@ module.exports = function toppingsPizzaRepository (models, Sequelize) {
       }
     };
 
-    const item = await toppingPizza.findOne(cond);
+    const item = await toppingsPizza.findOne(cond);
 
     if (item) {
       let updated;
       try {
         toppingPizza._updated_at = new Date();
-        updated = await toppingPizza.update(toppingPizza, cond);
+        updated = await toppingsPizza.update(toppingPizza, cond);
       } catch (error) {
         throw new Error(error.message);
       }
-      return updated ? toppingPizza.findOne(cond) : item;
+      return updated ? toppingsPizza.findOne(cond) : item;
     }
 
     let result;
     try {
-      result = await toppingPizza.create(toppingPizza);
+      result = await toppingsPizza.create(toppingPizza);
     } catch (error) {
       throw new Error(error.message);
     }

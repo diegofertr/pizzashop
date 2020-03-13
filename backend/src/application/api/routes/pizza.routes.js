@@ -9,5 +9,6 @@ module.exports = function setupPizzaRoute (api, controllers) {
   api.put('/:id', PizzaController.updatePizza);
   api.delete('/:id', PizzaController.deletePizza);
 
-  api.get('/toppings', PizzaController.getToppingsPizza);
+  api.get('/:id/toppings', PizzaController.getToppingsPizza);
+  api.post('/:idPizza/topping/:idTopping', PizzaController.addToppingToPizza);
 }

@@ -103,8 +103,39 @@ module.exports = function setupPizzaController (services) {
 
   async function getToppingsPizza(req, res, next) {
     debug('Get Toppings-Pizzas');
-    const dataFromService = await ToppingsPizzaService.findAll();
-    res.send(dataFromService);
+
+    try {
+      const { id } = req.params;
+      const result = await await PizzaService.getPizzaToppings(id);
+      if (result.code === 1) {
+        res.send(result.data);
+      } else {
+        return res.status(412).send({ 
+          error: result.message || 'An error ocurred while getting pizza toppings' 
+        });
+      }
+    } catch (e) {
+      return next(e);
+    }
+  }
+
+  async function addToppingToPizza(req, res, next) {
+    debug('Adding Topping to Pizza');
+    
+    try {
+      const { idPizza, idTopping } = req.params;
+      const result = await PizzaService.addToppingPizza(idPizza, idTopping);
+
+      if (result.code == 1) {
+        res.send(result.data);
+      } else {
+        return res.status(412).send({ 
+          error: result.message || 'An error ocurred while adding topping to pizza' 
+        });
+      }
+    } catch (e) {
+      return next(e);
+    }
   }
 
   return {
@@ -113,6 +144,7 @@ module.exports = function setupPizzaController (services) {
     createPizza,
     updatePizza,
     deletePizza,
-    getToppingsPizza
+    getToppingsPizza,
+    addToppingToPizza
   }
 }

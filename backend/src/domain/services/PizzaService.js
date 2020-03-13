@@ -3,7 +3,7 @@
 const debug = require('debug')('app:service:pizza');
 
 module.exports = function pizzaService (repositories, res) {
-  const { PizzaRepository } = repositories;
+  const { PizzaRepository, ToppingsPizzaRepository } = repositories;
 
   async function findAll (params = {}) {
     debug('List of pizzas');
@@ -77,10 +77,72 @@ module.exports = function pizzaService (repositories, res) {
     return res.success(deleted > 0);
   }
 
+  async function addToppingPizza (idPizza, idTopping) {
+    debug('Adding topping to pizza');
+
+    let toppingsPizza;
+    try {
+      // Looking for topping in pizza
+      const findPizzaTopping = await ToppingsPizzaRepository.findAll({
+        id_pizza: idPizza,
+        id_topping: idTopping
+      });
+      if (findPizzaTopping.count >= 1 && findPizzaTopping.rows.length >= 1) {
+        return res.error({ message: 'Pizza already has this topping' });
+      }
+    } catch (e) {
+      return res.error(e);
+    }
+
+    try {
+      let data = {
+        id_pizza: idPizza,
+        id_topping: idTopping
+      }
+      toppingsPizza = await ToppingsPizzaRepository.createOrUpdate(data);
+    } catch (e) {
+      return res.error(e);
+    }
+
+    if (!toppingsPizza) {
+      return res.error(new Error(`Toppings could not be added`));
+    }
+
+    return res.success(toppingsPizza);
+  }
+
+  async function getPizzaToppings (idPizza) {
+    debug('Get Pizza Toppings');
+
+    let pizzaToppings;
+    let pizza;
+    try {
+      pizza = await PizzaRepository.findById(idPizza);
+      console.log(pizza);
+      pizzaToppings = await ToppingsPizzaRepository.findByPizzaId(idPizza);
+      let toppings = [];
+      pizzaToppings.rows.map((value) => {
+        toppings.push(value.topping.name);
+      });
+
+      pizza.toppings = toppings;
+    } catch (e) {
+      return res.error(e);
+    }
+
+    if (!pizzaToppings) {
+      return res.error(new Error(`Pizza ${id} toppings not found`));
+    }
+
+    return res.success(pizza);
+  }
+
   return {
     findAll,
     findById,
     createOrUpdate,
-    deleteItem
+    deleteItem,
+    addToppingPizza,
+    getPizzaToppings
   };
 };
