@@ -38,7 +38,7 @@ module.exports = function toppingsRepository (models, Sequelize) {
   async function createOrUpdate (topping) {
     const cond = {
       where: {
-        id: topping.id
+        id: topping.id || null
       }
     };
 

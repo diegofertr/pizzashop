@@ -63,7 +63,7 @@ module.exports = function setupPizzaController (services) {
   }
 
   async function updatePizza(req, res, next) {
-    debug('Creating Pizza');
+    debug('Updating Pizza');
 
     try {
       const { id } = req.params;
@@ -75,7 +75,7 @@ module.exports = function setupPizzaController (services) {
         res.send(result.data);
       } else {
         return res.status(412).send({ 
-          error: result.message || 'An error ocurred while creating pizza' 
+          error: result.message || 'An error ocurred while updating pizza' 
         });
       }
     } catch (e) {

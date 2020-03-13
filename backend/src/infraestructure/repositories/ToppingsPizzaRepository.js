@@ -51,7 +51,7 @@ module.exports = function toppingsPizzaRepository (models, Sequelize) {
   async function createOrUpdate (toppingPizza) {
     const cond = {
       where: {
-        id: toppingPizza.id
+        id: toppingPizza.id || null
       }
     };
 
