@@ -1,0 +1,4 @@
+node_modules/
+.vscode/
+src/common/config/db.js
+package-lock.json

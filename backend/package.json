@@ -1,0 +1,26 @@
+{
+  "name": "backend-ddd",
+  "version": "1.0.0",
+  "description": "Backend for Pizzashop",
+  "main": "src/application/index.js",
+  "scripts": {
+    "dev": "DEBUG=app:* nodemon src/application/server"
+  },
+  "keywords": ["Node", "Postgresql", "Express", "DDD"],
+  "author": "Diego F. Ticona Ramos <diegonano09@gmail.com>",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "chalk": "^3.0.0",
+    "cors": "^2.8.5",
+    "defaults": "^1.0.3",
+    "express": "^4.17.1",
+    "pg": "^7.18.2",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^5.21.5",
+    "sequelize-cli": "^5.5.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}
