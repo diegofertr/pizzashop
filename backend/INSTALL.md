@@ -6,10 +6,10 @@ See [TOOLS.md](TOOLS.md)
 
 ## Project Installation
 
-1. Enter the folder
+1. Enter the project folder
 
 ```sh
-$ cd base-api
+$ cd backend
 ```
 
 2. Install dependencies from npm
