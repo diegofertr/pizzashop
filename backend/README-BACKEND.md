@@ -21,7 +21,7 @@ Intalation
 
 ## API Documentation
 
-You can see the API documentation at the following [link](http://localhost:3000/docs)
+You can see the API documentation at the following [link](http://localhost:3000/docs) if the application is running in development mode.
 
 ## Task execution
 ...
