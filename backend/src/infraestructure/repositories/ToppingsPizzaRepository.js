@@ -15,7 +15,7 @@ module.exports = function toppingsPizzaRepository (models, Sequelize) {
         as: 'pizza'
       },
       {
-        attributes: ['name'],
+        attributes: ['id', 'name'],
         model: toppings,
         as: 'topping'
       }
@@ -38,7 +38,7 @@ module.exports = function toppingsPizzaRepository (models, Sequelize) {
         id_pizza: idPizza
       },
       include: [{
-        attributes: ['name'],
+        attributes: ['id', 'name'],
         model: toppings,
         as: 'topping'
       }]
@@ -85,8 +85,28 @@ module.exports = function toppingsPizzaRepository (models, Sequelize) {
     return result.toJSON();
   }
 
-  async function deleteItem(id) {
-    return deleteItemModel(id, toppingsPizza);
+  async function deleteItem(idPizza, idTopping) {
+    const cond = {
+      where: {
+        id_pizza: idPizza || null,
+        id_topping: idTopping || null
+      }
+    };
+    const item = await toppingsPizza.findOne(cond);
+
+    return deleteItemModel(item.id, toppingsPizza);
+  }
+
+  async function createAll (items, t) {
+    try {
+      let result = await toppingsPizza.bulkCreate(items, t ? { transaction: t } : {});
+      return result;
+    } catch (e) {
+      if (t) {
+        t.rollback();
+      }
+      errorHandler(e);
+    }
   }
 
   return {
@@ -94,6 +114,7 @@ module.exports = function toppingsPizzaRepository (models, Sequelize) {
     findByPizzaId,
     findByToppingId,
     createOrUpdate,
-    deleteItem
+    deleteItem,
+    createAll
   };
 };

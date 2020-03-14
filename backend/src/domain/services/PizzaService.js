@@ -11,6 +11,20 @@ module.exports = function pizzaService (repositories, res) {
     let lista;
     try {
       lista = await PizzaRepository.findAll(params);
+      if (params.toppings) {
+        for (let item of lista.rows) {
+          let pizzaToppings = await ToppingsPizzaRepository.findByPizzaId(item.id);
+          let toppings = [];
+          pizzaToppings.rows.map((val) => {
+            toppings.push({
+              id: val.topping.id,
+              name: val.topping.name
+            })
+          });
+
+          item.dataValues.toppings = toppings;
+        }
+      }
     } catch (e) {
       return res.error(e);
     }
@@ -77,29 +91,33 @@ module.exports = function pizzaService (repositories, res) {
     return res.success(deleted > 0);
   }
 
-  async function addToppingPizza (idPizza, idTopping) {
+  async function addToppingsPizza (idPizza, toppings) {
     debug('Adding topping to pizza');
 
+    let toppingsData = [];
     let toppingsPizza;
-    try {
-      // Looking for topping in pizza
-      const findPizzaTopping = await ToppingsPizzaRepository.findAll({
+
+    toppings.map(topping => {
+      toppingsData.push({
         id_pizza: idPizza,
-        id_topping: idTopping
+        id_topping: topping
       });
-      if (findPizzaTopping.count >= 1 && findPizzaTopping.rows.length >= 1) {
-        return res.error({ message: 'Pizza already has this topping' });
-      }
-    } catch (e) {
-      return res.error(e);
-    }
+    });
+    // try {
+    //   // Looking for topping in pizza
+    //   const findPizzaTopping = await ToppingsPizzaRepository.findAll({
+    //     id_pizza: idPizza,
+    //     id_topping: idTopping
+    //   });
+    //   if (findPizzaTopping.count >= 1 && findPizzaTopping.rows.length >= 1) {
+    //     return res.error({ message: 'Pizza already has this topping' });
+    //   }
+    // } catch (e) {
+    //   return res.error(e);
+    // }
 
     try {
-      let data = {
-        id_pizza: idPizza,
-        id_topping: idTopping
-      }
-      toppingsPizza = await ToppingsPizzaRepository.createOrUpdate(data);
+      toppingsPizza = await ToppingsPizzaRepository.createAll(toppingsData);
     } catch (e) {
       return res.error(e);
     }
@@ -118,7 +136,6 @@ module.exports = function pizzaService (repositories, res) {
     let pizza;
     try {
       pizza = await PizzaRepository.findById(idPizza);
-      console.log(pizza);
       pizzaToppings = await ToppingsPizzaRepository.findByPizzaId(idPizza);
       let toppings = [];
       pizzaToppings.rows.map((value) => {
@@ -142,7 +159,7 @@ module.exports = function pizzaService (repositories, res) {
     findById,
     createOrUpdate,
     deleteItem,
-    addToppingPizza,
+    addToppingsPizza,
     getPizzaToppings
   };
 };

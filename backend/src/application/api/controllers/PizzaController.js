@@ -9,7 +9,7 @@ module.exports = function setupPizzaController (services) {
     debug('Get Pizzas List');
 
     try {
-      const result = await PizzaService.findAll();
+      const result = await PizzaService.findAll(req.query);
 
       if (result.code === 1) {
         res.send(result.data);
@@ -119,18 +119,37 @@ module.exports = function setupPizzaController (services) {
     }
   }
 
-  async function addToppingToPizza(req, res, next) {
+  async function addToppingsToPizza(req, res, next) {
     debug('Adding Topping to Pizza');
-    
+
     try {
-      const { idPizza, idTopping } = req.params;
-      const result = await PizzaService.addToppingPizza(idPizza, idTopping);
+      const { id } = req.params;
+      const result = await PizzaService.addToppingsPizza(id, req.body);
 
       if (result.code == 1) {
         res.send(result.data);
       } else {
         return res.status(412).send({ 
           error: result.message || 'An error ocurred while adding topping to pizza' 
+        });
+      }
+    } catch (e) {
+      return next(e);
+    }
+  }
+
+  async function deletePizzaTopping(req, res, next) {
+    debug('Deleting pizza topping');
+
+    try {
+      const { idPizza, idTopping } = req.params;
+      const result = await ToppingsPizzaService.deleteItem(idPizza, idTopping);
+
+      if (result.code == 1) {
+        res.send(result.data);
+      } else {
+        return res.status(412).send({ 
+          error: result.message || 'An error ocurred while deleting pizza topping' 
         });
       }
     } catch (e) {
@@ -145,6 +164,7 @@ module.exports = function setupPizzaController (services) {
     updatePizza,
     deletePizza,
     getToppingsPizza,
-    addToppingToPizza
+    addToppingsToPizza,
+    deletePizzaTopping
   }
 }

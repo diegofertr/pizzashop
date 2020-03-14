@@ -56,12 +56,12 @@ module.exports = function toppingService (repositories, res) {
     return res.success(toppingsPizza);
   }
 
-  async function deleteItem (id) {
+  async function deleteItem (idPizza, idTopping) {
     debug('Deleting toppings-pizza');
 
     let deleted;
     try {
-      deleted = await ToppingsPizzaRepository.deleteItem(id);
+      deleted = await ToppingsPizzaRepository.deleteItem(idPizza, idTopping);
     } catch (e) {
       return res.error(e);
     }

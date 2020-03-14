@@ -10,5 +10,6 @@ module.exports = function setupPizzaRoute (api, controllers) {
   api.delete('/:id', PizzaController.deletePizza);
 
   api.get('/:id/toppings', PizzaController.getToppingsPizza);
-  api.post('/:idPizza/topping/:idTopping', PizzaController.addToppingToPizza);
+  api.post('/:id/toppings', PizzaController.addToppingsToPizza);
+  api.delete('/:idPizza/topping/:idTopping', PizzaController.deletePizzaTopping);
 }
