@@ -48,17 +48,17 @@ postgres=# \i /PATH_PROJECT/sql/database.sql
 npm run dev
 ```
 
-<!-- ## Iniciar el servicio con pm2
+## Start the service with pm2 (For production)
 
 ```sh
-$ env NODE_ENV=production pm2 start src/application/server.js --name "proyecto-api"
+$ env NODE_ENV=production pm2 start src/application/server.js --name "project-api"
 ```
 
-## Configurar Nginx
+## Configure Nginx
 
-Editar el archivo de configuración `nano /etc/nginx/sites-enabled/default`
+Edit the configuration file `nano /etc/nginx/sites-enabled/default`
 
-Agregar las siguientes lineas
+Add the following lines
 
 ```sh
   ...
@@ -68,10 +68,10 @@ Agregar las siguientes lineas
   ...
 ```
 
-Reiniciar el servicio
+Restart service
 
 ```sh
 $ sudo service nginx restart
-``` -->
+```
 
 ---

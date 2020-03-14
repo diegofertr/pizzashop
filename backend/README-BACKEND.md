@@ -16,7 +16,7 @@ Prerequisites
   - Nodejs v12.13.1 onwards
   - Postgresql 9 onwards
 
-Intalation
+Intallation
   - Detailed specification in the file [INSTALL.md](INSTALL.md)
 
 ## API Documentation
@@ -25,7 +25,7 @@ You can see the API documentation at the following [link](http://localhost:3000/
 
 ## Project Documentation
 
-- Database E/R Diagram: [VER](docs/Pizzashop-ER.png)
+- Database E/R Diagram: [SEE](docs/Pizzashop-ER.png)
 
 
 ## Task execution
