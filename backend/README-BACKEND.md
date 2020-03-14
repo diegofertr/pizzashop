@@ -23,6 +23,11 @@ Intalation
 
 You can see the API documentation at the following [link](http://localhost:3000/docs) if the application is running in development mode.
 
+## Project Documentation
+
+- Database E/R Diagram: [VER](docs/Pizzashop-ER.png)
+
+
 ## Task execution
 ...
 
