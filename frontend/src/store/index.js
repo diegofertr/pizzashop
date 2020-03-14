@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import { PizzaStore } from '@/modules/pizza/store'
-import { ToppingStore } from '@/modules/topping/store'
 
 Vue.use(Vuex)
 
@@ -20,7 +19,6 @@ export default new Vuex.Store({
   },
   actions: {},
   modules: {
-    pizza: { ...PizzaStore },
-    topping: { ...ToppingStore }
+    pizza: { ...PizzaStore }
   }
 })

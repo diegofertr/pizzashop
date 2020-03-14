@@ -2,16 +2,13 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import { PizzaRoutes } from '@/modules/pizza/routes'
+import { ToppingRoutes } from '@/modules/topping/routes'
 
 Vue.use(VueRouter)
 
 const routes = [
-  // {
-  //   path: '/',
-  //   name: 'Home',
-  //   component: Home
-  // },
-  ...PizzaRoutes
+  ...PizzaRoutes,
+  ...ToppingRoutes
 ]
 
 const router = new VueRouter({

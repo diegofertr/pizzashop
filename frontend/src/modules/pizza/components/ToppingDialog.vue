@@ -87,7 +87,6 @@ export default {
       if (index >= 0) this.toppingsSelected.splice(index, 1)
     },
     addPizzaTopping () {
-      console.log('Add Toppings to pizza ', this.pizza.id, this.toppingsSelected)
       PizzaServices.addPizzaToppings(this.pizza.id, this.toppingsSelected)
         .then(response => {
           this.toppingsSelected = []
