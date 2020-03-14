@@ -92,6 +92,11 @@ export default {
           this.toppingsSelected = []
           this.$store.commit('closeModal')
         })
+        .catch(e => {
+          console.log(e)
+          this.toppingsSelected = []
+          this.$store.commit('closeModal')
+        })
     }
   }
 }

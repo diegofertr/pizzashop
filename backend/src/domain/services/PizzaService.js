@@ -97,27 +97,28 @@ module.exports = function pizzaService (repositories, res) {
     let toppingsData = [];
     let toppingsPizza;
 
-    toppings.map(topping => {
-      toppingsData.push({
-        id_pizza: idPizza,
-        id_topping: topping
+    try {
+      const findToppingsPizza = await ToppingsPizzaRepository.findAll();
+      // Looking for topping in pizza
+      toppings.map(idTopping => {
+        let toppingExist = findToppingsPizza.rows.filter(item => (item.id_pizza == idPizza && item.id_topping == idTopping));
+
+        if (toppingExist.length === 0) {
+          toppingsData.push({
+            id_pizza: idPizza,
+            id_topping: idTopping
+          });
+        }
       });
-    });
-    // try {
-    //   // Looking for topping in pizza
-    //   const findPizzaTopping = await ToppingsPizzaRepository.findAll({
-    //     id_pizza: idPizza,
-    //     id_topping: idTopping
-    //   });
-    //   if (findPizzaTopping.count >= 1 && findPizzaTopping.rows.length >= 1) {
-    //     return res.error({ message: 'Pizza already has this topping' });
-    //   }
-    // } catch (e) {
-    //   return res.error(e);
-    // }
+    } catch (e) {
+      return res.error(e);
+    }
 
     try {
-      toppingsPizza = await ToppingsPizzaRepository.createAll(toppingsData);
+      console.log('toppingsData ::: ', toppingsData);
+      if (toppingsData.length > 0) {
+        toppingsPizza = await ToppingsPizzaRepository.createAll(toppingsData);
+      }
     } catch (e) {
       return res.error(e);
     }
