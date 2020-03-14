@@ -3,6 +3,8 @@ Instructions to run the application
 
 ## Backend
 
-- Detailed specification in the file [README-BACKEND.md](/backend/README-BACKEND.md)
+- Detailed specification in [README-BACKEND](/backend/README-BACKEND.md)
 
 ## Frontend
+
+- Detailed specification in [README-FRONTEND](/frontend/README.md)
