@@ -14,7 +14,6 @@ export const PizzaStore = {
   actions: {
     createPizza: async ({ commit }, payload) => {
       const response = await PizzaServices.createPizza(payload)
-      console.log(response);
 
       commit(CREATE_PIZZA, response.data)
     },
@@ -49,7 +48,6 @@ export const PizzaStore = {
       const { pizzas } = state
       const newState = pizzas.map(pizza => {
         if (pizza.id === payload.id) {
-          console.log(pizza);
           pizza = payload
         }
 
